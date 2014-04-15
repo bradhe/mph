@@ -1,8 +1,10 @@
 # Vim stuff
 *.sw[onp]
 
-# build stuff
+# known build stuff
 *.o
+mph-*.tar.gz
+src/*.lo
 
 # other build-related stuff I don't grok
 autom4te.cache
@@ -23,3 +25,8 @@ depcomp
 .deps/
 src/.deps/
 src/.dirstamp
+.libs/
+libmph.la
+libtool
+ltmain.sh
+m4/
