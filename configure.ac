@@ -2,13 +2,15 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([mph], [0.1], [brad.heller@gmail.com])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
-AC_CONFIG_SRCDIR([src])
+AC_INIT
+AC_CONFIG_SRCDIR([Makefile.am])
+AM_INIT_AUTOMAKE([mph], [0.1], [brad.heller@gmail.com])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_LN_S
 
 # Checks for libraries.
 # FIXME: Add other functions in `-lcmph`
