@@ -10,3 +10,10 @@ autoscan.log
 config.log
 config.status
 configure.scan
+aclocal.m4
+compile
+config.h
+config.h.in~
+install-sh
+missing
+stamp-h1
