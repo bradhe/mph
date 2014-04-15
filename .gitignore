@@ -17,3 +17,6 @@ config.h.in~
 install-sh
 missing
 stamp-h1
+config.guess
+config.sub
+depcomp
