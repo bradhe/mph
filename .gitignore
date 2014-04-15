@@ -20,3 +20,6 @@ stamp-h1
 config.guess
 config.sub
 depcomp
+.deps/
+src/.deps/
+src/.dirstamp
