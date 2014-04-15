@@ -1,4 +1,4 @@
-SUBDIRS = src 
+AUTOMAKE_OPTIONS = subdir-objects
 lib_LIBRARIES = libmph.a
 libmph_a_SOURCES = src/mph.c
 pkgconfigdir = $(libdir)/pkgconfig

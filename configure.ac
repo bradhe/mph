@@ -11,6 +11,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_LN_S
+AC_PROG_RANLIB
 
 # Checks for libraries.
 # FIXME: Add other functions in `-lcmph`
