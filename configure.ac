@@ -2,8 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
-AC_CONFIG_SRCDIR([main.c])
+AC_INIT([mph], [0.1], [brad.heller@gmail.com])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
