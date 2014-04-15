@@ -6,12 +6,13 @@ AC_INIT
 AC_CONFIG_SRCDIR([Makefile.am])
 AM_INIT_AUTOMAKE([mph], [0.1], [brad.heller@gmail.com])
 AC_CONFIG_HEADERS([config.h])
+LT_INIT
+AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_LN_S
-AC_PROG_RANLIB
 
 # Checks for libraries.
 # FIXME: Add other functions in `-lcmph`

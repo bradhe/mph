@@ -76,14 +76,19 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
+build_triplet = x86_64-apple-darwin13.1.0
+host_triplet = x86_64-apple-darwin13.1.0
 subdir = .
 DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
 	$(srcdir)/config.h.in depcomp COPYING compile config.guess \
-	config.sub install-sh missing
+	config.sub install-sh missing ltmain.sh
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
@@ -120,18 +125,15 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(libdir)"
-LIBRARIES = $(lib_LIBRARIES)
-AR = ar
-ARFLAGS = cru
-AM_V_AR = $(am__v_AR_$(V))
-am__v_AR_ = $(am__v_AR_$(AM_DEFAULT_VERBOSITY))
-am__v_AR_0 = @echo "  AR      " $@;
-am__v_AR_1 = 
-libmph_a_AR = $(AR) $(ARFLAGS)
-libmph_a_LIBADD =
+LTLIBRARIES = $(lib_LTLIBRARIES)
+libmph_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libmph_a_OBJECTS = src/mph.$(OBJEXT)
-libmph_a_OBJECTS = $(am_libmph_a_OBJECTS)
+am_libmph_la_OBJECTS = src/mph.lo
+libmph_la_OBJECTS = $(am_libmph_la_OBJECTS)
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -150,18 +152,24 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
 AM_V_CC = $(am__v_CC_$(V))
 am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
 am__v_CC_0 = @echo "  CC      " $@;
 am__v_CC_1 = 
 CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_CCLD = $(am__v_CCLD_$(V))
 am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libmph_a_SOURCES)
-DIST_SOURCES = $(libmph_a_SOURCES)
+SOURCES = $(libmph_la_SOURCES)
+DIST_SOURCES = $(libmph_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -209,6 +217,7 @@ distcleancheck_listfiles = find . -type f -print
 ACLOCAL = ${SHELL} /Users/brad/Development/cmph_test/missing aclocal-1.14
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
+AR = ar
 AUTOCONF = ${SHELL} /Users/brad/Development/cmph_test/missing autoconf
 AUTOHEADER = ${SHELL} /Users/brad/Development/cmph_test/missing autoheader
 AUTOMAKE = ${SHELL} /Users/brad/Development/cmph_test/missing automake-1.14
@@ -221,25 +230,38 @@ CPPFLAGS =
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
+DLLTOOL = false
+DSYMUTIL = dsymutil
+DUMPBIN = 
 ECHO_C = \c
 ECHO_N = 
 ECHO_T = 
 EGREP = /usr/bin/grep -E
 EXEEXT = 
+FGREP = /usr/bin/grep -F
 GREP = /usr/bin/grep
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
+LD = /usr/bin/ld
 LDFLAGS = 
 LIBOBJS = 
 LIBS = -lcmph 
+LIBTOOL = $(SHELL) $(top_builddir)/libtool
+LIPO = lipo
 LN_S = ln -s
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /Users/brad/Development/cmph_test/missing makeinfo
+MANIFEST_TOOL = :
 MKDIR_P = ./install-sh -c -d
+NM = /usr/bin/nm
+NMEDIT = nmedit
+OBJDUMP = false
 OBJEXT = o
+OTOOL = otool
+OTOOL64 = :
 PACKAGE = mph
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = 
@@ -249,29 +271,40 @@ PACKAGE_URL =
 PACKAGE_VERSION = 
 PATH_SEPARATOR = :
 RANLIB = ranlib
+SED = /usr/bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
-STRIP = 
+STRIP = strip
 VERSION = 0.1
 abs_builddir = /Users/brad/Development/cmph_test
 abs_srcdir = /Users/brad/Development/cmph_test
 abs_top_builddir = /Users/brad/Development/cmph_test
 abs_top_srcdir = /Users/brad/Development/cmph_test
+ac_ct_AR = ar
 ac_ct_CC = /usr/local/bin/gcc-4.6
+ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
+build = x86_64-apple-darwin13.1.0
 build_alias = 
+build_cpu = x86_64
+build_os = darwin13.1.0
+build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
+host = x86_64-apple-darwin13.1.0
 host_alias = 
+host_cpu = x86_64
+host_os = darwin13.1.0
+host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
@@ -296,14 +329,15 @@ top_build_prefix =
 top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = subdir-objects
-lib_LIBRARIES = libmph.a
-libmph_a_SOURCES = src/mph.c
+ACLOCAL_AMFLAGS = -I m4
+lib_LTLIBRARIES = libmph.la
+libmph_la_SOURCES = src/mph.c
 pkgconfigdir = $(libdir)/pkgconfig
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
 .SUFFIXES:
-.SUFFIXES: .c .o .obj
+.SUFFIXES: .c .lo .o .obj
 am--refresh: Makefile
 	@:
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
@@ -353,9 +387,10 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
-install-libLIBRARIES: $(lib_LIBRARIES)
+
+install-libLTLIBRARIES: $(lib_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
-	@list='$(lib_LIBRARIES)'; test -n "$(libdir)" || list=; \
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
 	list2=; for p in $$list; do \
 	  if test -f $$p; then \
 	    list2="$$list2 $$p"; \
@@ -364,47 +399,49 @@ install-libLIBRARIES: $(lib_LIBRARIES)
 	test -z "$$list2" || { \
 	  echo " $(MKDIR_P) '$(DESTDIR)$(libdir)'"; \
 	  $(MKDIR_P) "$(DESTDIR)$(libdir)" || exit 1; \
-	  echo " $(INSTALL_DATA) $$list2 '$(DESTDIR)$(libdir)'"; \
-	  $(INSTALL_DATA) $$list2 "$(DESTDIR)$(libdir)" || exit $$?; }
-	@$(POST_INSTALL)
-	@list='$(lib_LIBRARIES)'; test -n "$(libdir)" || list=; \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(libdir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(libdir)"; \
+	}
+
+uninstall-libLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
 	for p in $$list; do \
-	  if test -f $$p; then \
-	    $(am__strip_dir) \
-	    echo " ( cd '$(DESTDIR)$(libdir)' && $(RANLIB) $$f )"; \
-	    ( cd "$(DESTDIR)$(libdir)" && $(RANLIB) $$f ) || exit $$?; \
-	  else :; fi; \
+	  $(am__strip_dir) \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$f"; \
 	done
 
-uninstall-libLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(lib_LIBRARIES)'; test -n "$(libdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(libdir)'; $(am__uninstall_files_from_dir)
-
-clean-libLIBRARIES:
-	-test -z "$(lib_LIBRARIES)" || rm -f $(lib_LIBRARIES)
+clean-libLTLIBRARIES:
+	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+	@list='$(lib_LTLIBRARIES)'; \
+	locs=`for p in $$list; do echo $$p; done | \
+	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
+	      sort -u`; \
+	test -z "$$locs" || { \
+	  echo rm -f $${locs}; \
+	  rm -f $${locs}; \
+	}
 src/$(am__dirstamp):
 	@$(MKDIR_P) src
 	@: > src/$(am__dirstamp)
 src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) src/$(DEPDIR)
 	@: > src/$(DEPDIR)/$(am__dirstamp)
-src/mph.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+src/mph.lo: src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 
-libmph.a: $(libmph_a_OBJECTS) $(libmph_a_DEPENDENCIES) $(EXTRA_libmph_a_DEPENDENCIES) 
-	$(AM_V_at)-rm -f libmph.a
-	$(AM_V_AR)$(libmph_a_AR) libmph.a $(libmph_a_OBJECTS) $(libmph_a_LIBADD)
-	$(AM_V_at)$(RANLIB) libmph.a
+libmph.la: $(libmph_la_OBJECTS) $(libmph_la_DEPENDENCIES) $(EXTRA_libmph_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(LINK) -rpath $(libdir) $(libmph_la_OBJECTS) $(libmph_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f src/*.$(OBJEXT)
+	-rm -f src/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
-include src/$(DEPDIR)/mph.Po
+include src/$(DEPDIR)/mph.Plo
 
 .c.o:
 	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -421,6 +458,24 @@ include src/$(DEPDIR)/mph.Po
 #	$(AM_V_CC)source='$<' object='$@' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.c.lo:
+	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+	$(LTCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+	$(am__mv) $$depbase.Tpo $$depbase.Plo
+#	$(AM_V_CC)source='$<' object='$@' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(LTCOMPILE) -c -o $@ $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+	-rm -rf src/.libs src/_libs
+
+distclean-libtool:
+	-rm -f libtool config.lt
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -646,7 +701,7 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-am
-all-am: Makefile $(LIBRARIES) config.h
+all-am: Makefile $(LTLIBRARIES) config.h
 installdirs:
 	for dir in "$(DESTDIR)$(libdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
@@ -685,14 +740,15 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libLIBRARIES mostlyclean-am
+clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
+	mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf src/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-hdr distclean-tags
+	distclean-hdr distclean-libtool distclean-tags
 
 dvi: dvi-am
 
@@ -712,7 +768,7 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-libLIBRARIES
+install-exec-am: install-libLTLIBRARIES
 
 install-html: install-html-am
 
@@ -743,7 +799,8 @@ maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-am
 
-mostlyclean-am: mostlyclean-compile mostlyclean-generic
+mostlyclean-am: mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool
 
 pdf: pdf-am
 
@@ -753,26 +810,26 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-libLIBRARIES
+uninstall-am: uninstall-libLTLIBRARIES
 
 .MAKE: all install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am am--refresh check check-am clean \
-	clean-cscope clean-generic clean-libLIBRARIES cscope \
-	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
+	clean-cscope clean-generic clean-libLTLIBRARIES clean-libtool \
+	cscope cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
 	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
 	distcheck distclean distclean-compile distclean-generic \
-	distclean-hdr distclean-tags distcleancheck distdir \
-	distuninstallcheck dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-libLIBRARIES install-man install-pdf install-pdf-am \
+	distclean-hdr distclean-libtool distclean-tags distcleancheck \
+	distdir distuninstallcheck dvi dvi-am html html-am info \
+	info-am install install-am install-data install-data-am \
+	install-dvi install-dvi-am install-exec install-exec-am \
+	install-html install-html-am install-info install-info-am \
+	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
 	install-ps install-ps-am install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-libLIBRARIES
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am uninstall-libLTLIBRARIES
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
