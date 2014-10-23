@@ -6,3 +6,5 @@ lib_LTLIBRARIES = libmph.la
 libmph_la_SOURCES = src/mph.c src/mph.h
 
 pkgconfigdir = $(libdir)/pkgconfig
+
+AM_CFLAGS = -Os
